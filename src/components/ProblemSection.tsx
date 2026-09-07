@@ -1,87 +1,129 @@
 import React from 'react';
-import { Clock, TrendingUp, XCircle } from 'lucide-react';
+import { Clock, ArrowDown, Sparkles, XCircle, Brain, Target, Compass, Zap } from 'lucide-react';
+import { useInView } from '../hooks/useInView';
+import { AnimatedKeyword } from './AnimatedKeyword';
 
 export const ProblemSection: React.FC = () => {
-  const costs = [
-    { title: 'Projets retardés', desc: 'Ce livre, ce diplôme ou ce business qui reste à l’état d’ébauche.' },
-    { title: 'Opportunités manquées', desc: 'D’autres prennent l’initiative pendant que tu hésites encore.' },
-    { title: 'Travail accumulé', desc: 'Une pile de dossiers qui s’alourdit chaque soir.' },
-    { title: 'Charge mentale', desc: 'Ce bourdonnement continu : « je devrais être en train de bosser ».' },
-    { title: 'Frustration permanente', desc: 'Le décalage insupportable entre ton potentiel et tes actes.' },
-    { title: 'Confiance en soi fragilisée', desc: 'Cette petite voix qui te fait douter de ta propre parole.' },
+  const { ref, isInView } = useInView<HTMLElement>({
+    threshold: 0.2,
+    triggerOnce: true,
+  });
+
+  const costDimensions = [
+    { title: 'Temps.', desc: 'Des heures précieuses volatilisées dans le vide passif.', icon: Clock, color: 'text-amber-400' },
+    { title: 'Opportunités.', desc: 'D’autres prennent les devants pendant que tu hésites encore.', icon: Compass, color: 'text-sky-400' },
+    { title: 'Projets.', desc: 'Des idées et ambitions majeures qui restent au point mort.', icon: Target, color: 'text-purple-400' },
+    { title: 'Énergie mentale.', desc: 'Ce bruit de fond toxique de la tâche inachevée.', icon: Brain, color: 'text-red-400' },
   ];
 
   return (
-    <section id="problem-section" className="py-14 sm:py-20 px-4 bg-[#0b0f17] border-b border-slate-800">
+    <section
+      ref={ref}
+      id="problem-section"
+      className="py-14 sm:py-24 px-4 bg-[#0b0f17] border-b border-slate-800/90 relative overflow-hidden"
+    >
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-3">
           <span className="text-xs sm:text-sm font-bold tracking-widest text-red-400 uppercase">
-            SECTION 03 — LE COÛT SILENCIEUX
+            SECTION 03 — LE COÛT INVISIBLE
           </span>
         </div>
 
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-center text-white tracking-tight leading-tight">
-          LE DANGER N’EST PAS DE REPORTER UNE FOIS.
+        <h2 className="text-2xl sm:text-3xl md:text-5xl font-black text-center text-white tracking-tight leading-tight">
+          LE{' '}
+          <AnimatedKeyword variant="warning" as="span">
+            COÛT SILENCIEUX
+          </AnimatedKeyword>{' '}
+          DU{' '}
+          <AnimatedKeyword variant="amber" as="span">
+            REPORT
+          </AnimatedKeyword>.
         </h2>
-        <p className="text-xl sm:text-2xl md:text-3xl font-extrabold text-center text-amber-400 mt-2">
-          C’EST DE TRANSFORMER LE REPORT EN HABITUDE.
+        <p className="mt-2 text-center text-sm sm:text-base text-slate-400 max-w-xl mx-auto">
+          Ce ne sont pas seulement quelques minutes perdues. C’est l’érosion lente de ta confiance.
         </p>
 
-        {/* Accumulation Math Card */}
-        <div className="mt-8 sm:mt-12 bg-slate-900/90 border border-slate-700/80 rounded-2xl p-6 sm:p-8 shadow-xl">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-            <div className="p-4 bg-slate-950/60 rounded-xl border border-slate-800">
-              <span className="text-xs text-slate-400 uppercase font-semibold">Lundi</span>
-              <div className="text-xl sm:text-2xl font-black text-slate-200 mt-1">20 minutes</div>
-              <span className="text-xs text-slate-400">reportées sur le téléphone</span>
+        {/* Section 14: Formula Animation Card */}
+        <div className="mt-10 sm:mt-14 bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center text-center">
+            {/* 20 MINUTES */}
+            <div
+              className={`p-5 rounded-2xl bg-slate-950/80 border border-slate-800 transition-all duration-500 ${
+                isInView ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'
+              }`}
+            >
+              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                Chaque jour
+              </span>
+              <div className="text-3xl sm:text-4xl md:text-5xl font-black text-white mt-1">
+                20 MINUTES
+              </div>
+              <p className="text-xs text-slate-400 mt-1">repoussées sans y penser</p>
             </div>
-            <div className="p-4 bg-slate-950/60 rounded-xl border border-slate-800">
-              <span className="text-xs text-slate-400 uppercase font-semibold">Mardi</span>
-              <div className="text-xl sm:text-2xl font-black text-slate-200 mt-1">30 minutes</div>
-              <span className="text-xs text-slate-400">« je ferai ça après manger »</span>
+
+            {/* × 30 jours ↓ */}
+            <div className="flex flex-col items-center justify-center py-2">
+              <span className="text-lg sm:text-xl font-black text-amber-400 tracking-wider">
+                × 30 JOURS
+              </span>
+              <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-amber-400 my-2">
+                <ArrowDown className="w-4 h-4 animate-bounce" />
+              </div>
+              <span className="text-xs text-slate-500 uppercase font-semibold">Accumulation mensuelle</span>
             </div>
-            <div className="p-4 bg-slate-950/60 rounded-xl border border-slate-800">
-              <span className="text-xs text-slate-400 uppercase font-semibold">Mercredi</span>
-              <div className="text-xl sm:text-2xl font-black text-slate-200 mt-1">1 heure</div>
-              <span className="text-xs text-slate-400">« de toute façon c’est trop tard »</span>
+
+            {/* 10 HEURES */}
+            <div
+              className={`p-5 rounded-2xl bg-gradient-to-b from-red-950/40 via-slate-950 to-slate-950 border-2 border-red-500/40 shadow-xl transition-all duration-700 delay-200 ${
+                isInView ? 'scale-100 opacity-100' : 'scale-90 opacity-0'
+              }`}
+            >
+              <span className="text-xs font-bold text-red-400 uppercase tracking-wider">
+                Total disparu
+              </span>
+              <div className="text-3xl sm:text-4xl md:text-5xl font-black mt-1">
+                <AnimatedKeyword variant="warning" as="span">
+                  10 HEURES
+                </AnimatedKeyword>
+              </div>
+              <p className="text-xs text-red-200/90 mt-1 font-medium">de vie & d’avancement par mois</p>
             </div>
           </div>
 
-          {/* Formula calculation */}
-          <div className="mt-6 p-5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-center flex flex-col sm:flex-row items-center justify-center gap-3">
-            <div className="flex items-center gap-2 text-amber-400 font-extrabold text-xl sm:text-2xl">
-              <Clock className="w-6 h-6" />
-              <span>20 minutes × 30 jours = 10 heures</span>
-            </div>
-            <span className="text-xs text-slate-400 bg-slate-900 px-2.5 py-1 rounded-full border border-slate-700">
-              Illustration arithmétique du temps reporté
-            </span>
+          <div className="mt-8 pt-6 border-t border-slate-800/80 text-center">
+            <p className="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto">
+              Sur une année, c’est plus de <strong className="text-white">120 heures</strong>. L’équivalent de 3 semaines de travail à plein temps absorbées par l’inertie du démarrage.
+            </p>
           </div>
-          <p className="text-center text-xs sm:text-sm text-slate-400 mt-3">
-            10 heures de vie, de concentration et de progrès envolées chaque mois sans que tu ne t’en rendes compte.
-          </p>
         </div>
 
-        {/* Real Concrete Costs Grid */}
-        <div className="mt-10">
-          <h3 className="text-lg sm:text-xl font-bold text-white mb-5 flex items-center gap-2">
-            <TrendingUp className="w-5 h-5 text-red-400" />
-            <span>Ce que ce décalage te coûte réellement au quotidien :</span>
-          </h3>
+        {/* Section 14: Progressive Reveal of what is really lost */}
+        <div className="mt-10 sm:mt-12">
+          <div className="text-center mb-6">
+            <h3 className="text-lg sm:text-xl font-bold text-white uppercase tracking-wider">
+              Ce que tu perds réellement chaque fois que tu repousses :
+            </h3>
+          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-            {costs.map((cost, idx) => (
-              <div
-                key={idx}
-                className="bg-slate-900/60 border border-slate-800 rounded-xl p-4 flex items-start gap-3 hover:border-red-900/40 transition-colors"
-              >
-                <XCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
-                <div>
-                  <h4 className="text-sm sm:text-base font-bold text-white">{cost.title}</h4>
-                  <p className="text-xs sm:text-sm text-slate-300 mt-0.5 leading-relaxed">{cost.desc}</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+            {costDimensions.map((item, idx) => {
+              const Icon = item.icon;
+              return (
+                <div
+                  key={idx}
+                  className={`p-5 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-slate-700 transition-all duration-500 hover:-translate-y-1 ${
+                    isInView ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+                  }`}
+                  style={{ transitionDelay: `${idx * 100 + 300}ms` }}
+                >
+                  <div className={`w-9 h-9 rounded-xl bg-slate-800 flex items-center justify-center mb-3 ${item.color}`}>
+                    <Icon className="w-5 h-5" />
+                  </div>
+                  <h4 className="text-base sm:text-lg font-black text-white">{item.title}</h4>
+                  <p className="text-xs sm:text-sm text-slate-400 mt-1 leading-relaxed">{item.desc}</p>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>

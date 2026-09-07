@@ -1,20 +1,31 @@
 import React from 'react';
-import { ShieldCheck, Zap, ArrowRight, Lock, CheckCircle2 } from 'lucide-react';
+import { ShieldCheck, Zap, ArrowRight, Lock, CheckCircle2, Sparkles } from 'lucide-react';
 import { CURRENT_PRICE, REFERENCE_PRICE, SAVINGS, CHECKOUT_URL } from '../constants';
 import { analytics } from '../utils/analytics';
+import { useInView } from '../hooks/useInView';
+import { AnimatedKeyword } from './AnimatedKeyword';
 
 interface PriceSectionProps {
   priceDisplayVariant?: 'standard' | 'crossed';
 }
 
 export const PriceSection: React.FC<PriceSectionProps> = ({ priceDisplayVariant = 'crossed' }) => {
+  const { ref, isInView } = useInView<HTMLElement>({
+    threshold: 0.15,
+    triggerOnce: true,
+  });
+
   const handleCtaClick = () => {
     analytics.track('click_cta_price', 'Clicked primary pricing section CTA');
     analytics.track('checkout_start', 'Navigating to checkout from Price section');
   };
 
   return (
-    <section id="pricing-section" className="py-14 sm:py-24 px-4 bg-gradient-to-b from-[#0b0f17] via-[#111827] to-[#0b0f17] border-b border-slate-800">
+    <section
+      ref={ref}
+      id="pricing-section"
+      className="py-16 sm:py-24 px-4 bg-gradient-to-b from-[#0b0f17] via-[#101726] to-[#0b0f17] border-b border-slate-800 relative overflow-hidden"
+    >
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-3">
           <span className="text-xs sm:text-sm font-bold tracking-widest text-amber-400 uppercase">
@@ -23,15 +34,18 @@ export const PriceSection: React.FC<PriceSectionProps> = ({ priceDisplayVariant 
         </div>
 
         {/* Section 13 Title */}
-        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-center text-white tracking-tight leading-tight">
-          COMBIEN TE COÛTE LE FAIT DE CONTINUER À REPORTER ?
+        <h2 className="text-2xl sm:text-3xl md:text-5xl font-black text-center text-white tracking-tight leading-tight">
+          COMBIEN TE COÛTE LE FAIT DE CONTINUER À{' '}
+          <AnimatedKeyword variant="warning" as="span">
+            REPORTER ?
+          </AnimatedKeyword>
         </h2>
 
         <p className="mt-4 text-base sm:text-lg text-slate-300 text-center max-w-2xl mx-auto leading-relaxed">
           Pense aux semaines entières perdues dans le brouillard mental, aux projets retardés d’un an, et au stress répété chaque soir. Reporter a un coût immense.
         </p>
 
-        {/* Big Offer Box */}
+        {/* Section 27 & 28: Big Offer Box with Pricing Event */}
         <div className="mt-10 sm:mt-12 bg-slate-900 border-2 border-amber-500/50 rounded-3xl p-6 sm:p-10 shadow-[0_20px_60px_-15px_rgba(245,158,11,0.25)] relative overflow-hidden">
           {/* Top banner pill */}
           <div className="flex justify-center -mt-6 sm:-mt-10 mb-6">
@@ -52,31 +66,26 @@ export const PriceSection: React.FC<PriceSectionProps> = ({ priceDisplayVariant 
             </p>
           </div>
 
-          {/* Pricing Highlight */}
-          <div className="my-8 py-6 px-4 rounded-2xl bg-slate-950/80 border border-slate-800 text-center max-w-lg mx-auto">
-            {priceDisplayVariant === 'crossed' ? (
-              <div className="flex flex-col items-center">
-                <span className="text-sm sm:text-base text-slate-400 line-through font-semibold">
-                  Valeur de référence : {REFERENCE_PRICE}
-                </span>
-                <div className="mt-1 flex items-baseline justify-center gap-2">
-                  <span className="text-xs sm:text-sm uppercase font-bold text-slate-300">Aujourd’hui :</span>
-                  <span className="text-4xl sm:text-5xl md:text-6xl font-black text-amber-400 tracking-tight">
-                    {CURRENT_PRICE}
-                  </span>
-                </div>
-                <div className="mt-2 inline-flex items-center gap-1.5 bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs sm:text-sm font-extrabold px-3 py-1 rounded-full">
-                  <span>Tu économises {SAVINGS}</span>
-                </div>
-              </div>
-            ) : (
-              <div className="flex flex-col items-center">
-                <span className="text-xs sm:text-sm uppercase font-bold text-slate-400">Tarif unique :</span>
-                <span className="text-4xl sm:text-5xl md:text-6xl font-black text-amber-400 tracking-tight mt-1">
+          {/* Pricing Highlight with Scale Transition */}
+          <div
+            className={`my-8 py-6 px-4 rounded-3xl bg-slate-950/90 border border-amber-500/30 text-center max-w-lg mx-auto transition-transform duration-700 ease-out ${
+              isInView ? 'scale-100' : 'scale-95 opacity-80'
+            }`}
+          >
+            <div className="flex flex-col items-center">
+              <span className="text-sm sm:text-base text-slate-400 line-through font-semibold">
+                Valeur de référence : {REFERENCE_PRICE}
+              </span>
+              <div className="mt-1 flex items-baseline justify-center gap-2">
+                <span className="text-xs sm:text-sm uppercase font-bold text-slate-300">Aujourd’hui :</span>
+                <span className="text-5xl sm:text-6xl md:text-7xl font-black text-amber-400 tracking-tight drop-shadow-[0_0_25px_rgba(245,158,11,0.3)]">
                   {CURRENT_PRICE}
                 </span>
               </div>
-            )}
+              <div className="mt-2 inline-flex items-center gap-1.5 bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs sm:text-sm font-extrabold px-3.5 py-1 rounded-full">
+                <span>Tu économises {SAVINGS}</span>
+              </div>
+            </div>
 
             <div className="mt-4 text-xs text-slate-400 font-medium">
               Paiement en une seule fois • Aucun abonnement caché • Accès illimité
@@ -107,7 +116,7 @@ export const PriceSection: React.FC<PriceSectionProps> = ({ priceDisplayVariant 
             </div>
           </div>
 
-          {/* Section 14 CTA Majeur */}
+          {/* Section 14 CTA Majeur with High-Performance Glow and Viewport Entrance */}
           <div className="text-center max-w-xl mx-auto">
             <div className="mb-4">
               <h4 className="text-lg sm:text-xl md:text-2xl font-black text-white tracking-tight uppercase">
@@ -122,10 +131,13 @@ export const PriceSection: React.FC<PriceSectionProps> = ({ priceDisplayVariant 
               id="cta-major-price"
               href={CHECKOUT_URL}
               onClick={handleCtaClick}
-              className="group w-full relative inline-flex items-center justify-center gap-3 font-black text-slate-950 bg-gradient-to-b from-amber-300 via-amber-400 to-amber-500 hover:from-amber-200 hover:to-amber-400 active:scale-[0.98] transition-all duration-150 py-4 sm:py-5 px-6 sm:px-8 text-lg sm:text-xl md:text-2xl rounded-2xl shadow-[0_12px_35px_-5px_rgba(245,158,11,0.5)] border-2 border-amber-200/80 cursor-pointer"
+              className="group w-full relative inline-flex items-center justify-center gap-3 font-black text-slate-950 bg-gradient-to-b from-amber-300 via-amber-400 to-amber-500 hover:from-amber-200 hover:to-amber-400 active:scale-[0.98] transition-all duration-150 py-4 sm:py-5 px-6 sm:px-8 text-lg sm:text-xl md:text-2xl rounded-2xl shadow-[0_12px_35px_-5px_rgba(245,158,11,0.5)] border-2 border-amber-200/80 cursor-pointer overflow-hidden"
             >
+              {/* Energy beam shimmer */}
+              <div className="absolute inset-0 w-1/3 bg-white/20 skew-x-12 animate-energy-beam pointer-events-none" />
+
               <span>🚀 JE VEUX LE MOTEUR DE L’ACTION</span>
-              <ArrowRight className="w-6 h-6 group-hover:translate-x-1.5 transition-transform" />
+              <ArrowRight className="w-6 h-6 group-hover:translate-x-1.5 transition-transform shrink-0" />
             </a>
 
             <div className="mt-3 text-xs sm:text-sm text-slate-300 font-medium">

@@ -13,10 +13,18 @@ export const NavigationAnchorBar: React.FC<NavigationAnchorBarProps> = ({
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('hero');
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 80);
+
+      // Calculate scroll progress percentage (0 - 100)
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalHeight > 0) {
+        const progress = Math.min(100, Math.max(0, (window.scrollY / totalHeight) * 100));
+        setScrollProgress(progress);
+      }
 
       const sections = ['hero', 'mechanism-section', 'content-modules-section', 'pricing-section', 'faq-section'];
       const scrollPosition = window.scrollY + 180;
@@ -59,10 +67,18 @@ export const NavigationAnchorBar: React.FC<NavigationAnchorBarProps> = ({
       aria-label="Navigation des sections clés"
       className={`sticky top-0 z-40 w-full transition-all duration-200 ${
         isScrolled
-          ? 'bg-slate-950/90 backdrop-blur-md border-b border-slate-800 shadow-xl py-2 sm:py-2.5'
-          : 'bg-slate-950/70 backdrop-blur-sm border-b border-slate-800/80 py-3'
+          ? 'bg-slate-950/95 backdrop-blur-md border-b border-slate-800 shadow-xl py-2 sm:py-2.5'
+          : 'bg-slate-950/80 backdrop-blur-sm border-b border-slate-800/80 py-3'
       }`}
     >
+      {/* Ultra-thin Scroll Progress Bar (01 & 11) */}
+      <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-slate-900/60 overflow-hidden">
+        <div
+          className="h-full bg-gradient-to-r from-amber-500 via-amber-300 to-emerald-400 transition-all duration-75 ease-out shadow-[0_0_8px_rgba(245,158,11,0.8)]"
+          style={{ width: `${scrollProgress}%` }}
+        />
+      </div>
+
       <div className="max-w-6xl mx-auto px-3 sm:px-6 flex items-center justify-between gap-2 sm:gap-4">
         {/* Brand title / Home anchor */}
         <a

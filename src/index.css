@@ -1,1 +1,153 @@
 @import "tailwindcss";
+
+@layer base {
+  :root {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  h1, h2, h3, .font-heading {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+  }
+}
+
+/* High performance GPU-accelerated entrance animation for CTAs */
+@keyframes ctaEntrance {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0) scale3d(0.96, 0.96, 1);
+    filter: blur(4px);
+  }
+  60% {
+    transform: translate3d(0, -3px, 0) scale3d(1.02, 1.02, 1);
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+    filter: blur(0px);
+  }
+}
+
+/* Subtle attention glow pulse for CTAs */
+@keyframes ctaShimmerGlow {
+  0%, 100% {
+    box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.35), 0 0 0 0 rgba(245, 158, 11, 0.2);
+  }
+  50% {
+    box-shadow: 0 14px 35px -5px rgba(245, 158, 11, 0.55), 0 0 20px 4px rgba(245, 158, 11, 0.25);
+  }
+}
+
+/* Subtle energy beam flow */
+@keyframes energyBeam {
+  0% {
+    transform: translateX(-100%) skewX(-15deg);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateX(200%) skewX(-15deg);
+    opacity: 0;
+  }
+}
+
+/* Kinetic line dash flow */
+@keyframes dashFlow {
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+
+/* Float animation for 3D mockup */
+@keyframes softFloat {
+  0%, 100% {
+    transform: translate3d(0, 0px, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(0, -8px, 0) rotate(0.8deg);
+  }
+}
+
+/* Pulse indicator */
+@keyframes softPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(0.96);
+  }
+}
+
+/* Premium Gradient Shift Keyframe for Important Keywords */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Progressive Reveal Wipe for Headlines on Viewport Scroll */
+@keyframes keywordRevealWipe {
+  0% {
+    background-size: 300% 100%;
+    background-position: 100% 0;
+    filter: brightness(0.85);
+  }
+  100% {
+    background-size: 200% 100%;
+    background-position: 0% 0;
+    filter: brightness(1.05);
+  }
+}
+
+.animate-cta-entrance {
+  animation: ctaEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity, filter;
+}
+
+.animate-cta-glow {
+  animation: ctaShimmerGlow 3s ease-in-out infinite;
+}
+
+.animate-energy-beam {
+  animation: energyBeam 3.5s ease-in-out infinite;
+}
+
+.animate-soft-float {
+  animation: softFloat 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-soft-pulse {
+  animation: softPulse 2.5s ease-in-out infinite;
+}
+
+.animate-gradient-shift {
+  background-size: 220% 220%;
+  animation: gradientShift 5s ease-in-out infinite;
+  will-change: background-position;
+}
+
+.animate-keyword-reveal {
+  animation: keywordRevealWipe 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards, gradientShift 6s ease-in-out 0.9s infinite;
+  will-change: background-position, filter;
+}
+
+/* Respect user preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
