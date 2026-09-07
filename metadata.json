@@ -1,0 +1,6 @@
+{
+  "name": "Le Moteur de l’Action",
+  "description": "Le système pratique pour arrêter de repousser ce qui compte vraiment et apprendre à passer de l’intention à l’action.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
