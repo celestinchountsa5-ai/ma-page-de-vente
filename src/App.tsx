@@ -20,6 +20,7 @@ import { BeforeAfterSection } from './components/BeforeAfterSection';
 import { ContentModulesSection } from './components/ContentModulesSection';
 import { ApplicationMethodSection } from './components/ApplicationMethodSection';
 import { ThirtyDayPlanSection } from './components/ThirtyDayPlanSection';
+import { VideoTestimonialsSection } from './components/VideoTestimonialsSection';
 import { TestimonialsSection } from './components/TestimonialsSection';
 import { PriceSection } from './components/PriceSection';
 import { ObjectionsSection } from './components/ObjectionsSection';
@@ -94,7 +95,10 @@ export default function App() {
         {/* Section 12: Le Plan de 30 Jours */}
         <ThirtyDayPlanSection />
 
-        {/* Retours d'expérience authentiques */}
+        {/* Témoignages Vidéo - Boucles d'extraits et histoires de réussite */}
+        <VideoTestimonialsSection />
+
+        {/* Retours d'expérience écrits authentiques */}
         <TestimonialsSection />
 
         {/* Section 13 & 14: Prix, Ancrage et CTA Majeur */}

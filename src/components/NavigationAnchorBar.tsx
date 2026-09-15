@@ -26,7 +26,7 @@ export const NavigationAnchorBar: React.FC<NavigationAnchorBarProps> = ({
         setScrollProgress(progress);
       }
 
-      const sections = ['hero', 'mechanism-section', 'content-modules-section', 'pricing-section', 'faq-section'];
+      const sections = ['hero', 'mechanism-section', 'content-modules-section', 'video-testimonials-section', 'pricing-section', 'faq-section'];
       const scrollPosition = window.scrollY + 180;
 
       for (const sectionId of sections) {
@@ -123,6 +123,18 @@ export const NavigationAnchorBar: React.FC<NavigationAnchorBarProps> = ({
             }`}
           >
             Contenu
+          </a>
+
+          <a
+            href="#video-testimonials-section"
+            onClick={(e) => scrollToAnchor('video-testimonials-section', e)}
+            className={`px-2.5 sm:px-3 py-1.5 rounded-lg whitespace-nowrap transition-all cursor-pointer ${
+              activeSection === 'video-testimonials-section'
+                ? 'bg-amber-400 text-slate-950 font-bold shadow-sm'
+                : 'text-slate-300 hover:text-white hover:bg-slate-800/80'
+            }`}
+          >
+            Témoignages Vidéo
           </a>
 
           <a

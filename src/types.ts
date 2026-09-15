@@ -11,6 +11,30 @@ export interface Testimonial {
   avatarBg: string;
 }
 
+export interface VideoTestimonial {
+  id: string;
+  name: string;
+  role: string;
+  age: number;
+  city: string;
+  category: 'entrepreneur' | 'freelance' | 'salarie' | 'etudiant';
+  categoryLabel: string;
+  videoUrl: string;
+  thumbnailUrl: string;
+  durationSeconds: number;
+  durationFormatted: string;
+  headline: string;
+  quote: string;
+  transcript: string;
+  rating: number;
+  metrics: {
+    label: string;
+    value: string;
+  };
+  verifiedPurchase: boolean;
+  timeframe: string;
+}
+
 export interface ContentModule {
   id: string;
   number: string;
